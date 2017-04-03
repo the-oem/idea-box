@@ -1,0 +1,29 @@
+/* Color Palette Variables */
+
+$background: #E5F3F2;
+$primary-accent: #00A79D;
+$secondary-accent: #045E55;
+$primary-text: #6D6E71;
+$secondary-text: #939598;
+$button-text: #FFF;
+$divider: #D1D3D4;
+
+/* Font Variables */
+
+$primary-font: "Open Sans";
+$secondary-font: "Roboto Slab";
+$large-size: 38px;
+$medium-size: 28px;
+$small-size: 20px;
+$medium-weight: 400;
+$thick-weight: 700;
+body {
+  font-family: 'Roboto Slab', serif;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+/* Container elements */
+
+
+/* Form elements */
