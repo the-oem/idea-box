@@ -31,15 +31,14 @@ function loadIdeas() {
 // Function to check that the input fields all have data before enabling the Add to Album button.
 function readyToSubmit() {
 	if ($titleInput.val() !== '' && $bodyInput.val() !== '') {
-		toggleDisabled(false);
+		toggleDisabled($submitBtn, false);
 	} else {
-		toggleDisabled(true);
+		toggleDisabled($submitBtn, true);
 	}
 }
 
-// Function to toggle the disabled flag on the Add to Album button. jQuery, you really should make this easier...le sigh.
-function toggleDisabled(value) {
-	$submitBtn.prop('disabled', value);
+function toggleDisabled(buttonReference, value) {
+	buttonReference.prop('disabled', value);
 }
 
 // Event listeners on the input container that allow for checking of valid inputs before enabling the Add to Album button.
@@ -51,7 +50,24 @@ $body
 		var idea = new Idea($titleInput.val(), $bodyInput.val(), newGuid());
 		storeIdea(idea);
 		prependIdea(idea);
-	});
+	})
+	.on('click', '.delete-btn', deleteIdea);
+
+function deleteIdea() {
+	var $id = $(this).parent().parent().prop('id');
+	$(this).parent().parent().remove();
+	removeFromStorage($id);
+}
+
+function removeFromStorage(id) {
+	var idToDelete = id;
+	ideaArray.forEach(function (idea, index) {
+		if (idea.id == id) {
+			ideaArray.splice(index, 1);
+		}
+	})
+	localStorage.setItem('ideaBoxArray', JSON.stringify(ideaArray));
+}
 
 function newGuid() {
 	return Math.round(Math.random() * Date.now());
@@ -88,6 +104,6 @@ function prependIdea(idea) {
 function resetForm() {
 	$titleInput.val('');
 	$bodyInput.val('');
-	toggleDisabled(true);
+	toggleDisabled($submitBtn, true);
 	$titleInput.focus();
 }
