@@ -2,6 +2,7 @@
 
 //debugger;
 
+var $body = $('body');
 var $titleInput = $('.title-input');
 var $bodyInput = $('.body-input');
 var $submitBtn = $('.submit-btn');
@@ -17,18 +18,34 @@ function Idea(title, body, id) {
 	console.log(this);
 }
 
+// Function to check that the input fields all have data before enabling the Add to Album button.
+function readyToSubmit() {
+	if ($titleInput.val() !== '' && $bodyInput.val() !== '') {
+		toggleDisabled(false);
+	} else {
+		toggleDisabled(true);
+	}
+}
 
-$('.submit-btn').on("click", function () {
-	//debugger;
-	event.preventDefault();
-	var $title = $titleInput.val();
-	var $body = $bodyInput.val();
-	var $id = Math.round(Math.random() * Date.now());
-	var idea = new Idea($title, $body, $id);
-	// console.log(idea);
-	//storeIdea(idea);
-	prependIdea(idea);
-})
+// Function to toggle the disabled flag on the Add to Album button. jQuery, you really should make this easier...le sigh.
+function toggleDisabled(value) {
+	$submitBtn.prop('disabled', value);
+}
+
+// Event listeners on the input container that allow for checking of valid inputs before enabling the Add to Album button.
+$body
+	.on('input', '.title-input', readyToSubmit)
+	.on('input', '.body-input', readyToSubmit)
+	.on('click', '.submit-btn', function () {
+		event.preventDefault();
+		var idea = new Idea($titleInput.val(), $bodyInput.val(), newGuid());
+		storeIdea(idea);
+		prependIdea(idea);
+	});
+
+function newGuid() {
+	return Math.round(Math.random() * Date.now());
+}
 
 function storeIdea(idea) {
 	localStorage.setItem(idea.id, idea);
@@ -60,4 +77,6 @@ function prependIdea(idea) {
 function resetForm() {
 	$titleInput.val('');
 	$bodyInput.val('');
+	toggleDisabled(true);
+	$titleInput.focus();
 }
