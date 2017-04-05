@@ -9,18 +9,6 @@ $secondary-text: #939598;
 $btn-text: #FFF;
 $divider: #D1D3D4;*/
 
-
-/* Font Variables */
-
-
-/*$primary-font: "Open Sans";
-$secondary-font: "Roboto Slab";
-$large-size: 38px;
-$medium-size: 28px;
-$small-size: 20px;
-$medium-weight: 400;
-$thick-weight: 700;*/
-
 html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -33,8 +21,6 @@ html {
 }
 
 body {
-  /*font-family: 'Roboto Slab', serif;*/
-  /*font-family: 'Open Sans', sans-serif;*/
   margin: 0;
 }
 
@@ -81,9 +67,9 @@ body {
 }
 
 .card {
+  min-width: 300px;
   /*width: 90%;*/
   max-width: 300px;
-  min-width: 300px;
 }
 
 .card-header {
@@ -120,16 +106,20 @@ h1 span {
   font-size: 16px;
 }
 
+.body-input {
+  height: 100px;
+}
+
 .submit-btn {
   width: 100%;
   height: 26px;
   color: #FFF;
   border: 0;
+  outline: none;
   background-color: #00A79D;
   font-family: 'Open Sans', sans-serif;
   font-size: 18px;
   line-height: 18px;
-  outline: none;
 }
 
 .submit-btn:hover {
@@ -157,9 +147,15 @@ h1 span {
   font-family: 'Open Sans', sans-serif;
 }
 
-.idea-quality {
+.quality-label {
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
+  font-size: 14px;
+}
+
+.idea-quality {
+  color: #6D6E71;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
 }
 
@@ -206,9 +202,9 @@ h1 span {
 
 .card-footer {
   display: flex;
+  width: 150px;
   justify-content: space-between;
   align-items: center;
-  width: 150px;
 }
 
 
@@ -222,10 +218,9 @@ h3 {
   margin: 0;
 }
 
-@media(min-width: 1024px) {
-  textarea {
-    height: 300px;
-    /*background-color: yellow;*/
+@media(min-width: 1025px) {
+  .body-input {
+    height: 26px;
   }
 }
 

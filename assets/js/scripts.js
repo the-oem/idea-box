@@ -1,12 +1,11 @@
-// 'use strict';
-
-//debugger;
+'use strict';
 
 var $body = $('body');
 var $titleInput = $('.title-input');
 var $bodyInput = $('.body-input');
 var $submitBtn = $('.submit-btn');
 var $searchInput = $('.search-input');
+var ideaArray = [];
 
 // Constructors
 
@@ -16,6 +15,17 @@ function Idea(title, body, id) {
 	this.id = id;
 	this.quality = "swill";
 	console.log(this);
+}
+
+$(document).ready(function () {
+	loadIdeas();
+});
+
+function loadIdeas() {
+	ideaArray = JSON.parse(localStorage.getItem('ideaBoxArray')) || [];
+	for (var i = 0; i < ideaArray.length; i++) {
+		prependIdea(ideaArray[i]);
+	}
 }
 
 // Function to check that the input fields all have data before enabling the Add to Album button.
@@ -48,7 +58,8 @@ function newGuid() {
 }
 
 function storeIdea(idea) {
-	localStorage.setItem(idea.id, idea);
+	ideaArray.push(idea);
+	localStorage.setItem('ideaBoxArray', JSON.stringify(ideaArray));
 }
 
 function prependIdea(idea) {
@@ -67,7 +78,7 @@ function prependIdea(idea) {
 	    <div class="card-footer">
 	      <button type="button" name="button" class="upvote-btn" />
 	      <button type="button" name="button" class="downvote-btn" />
-				<span class="idea-quality">quality: ${$quality}</span>
+				<span class="quality-label">quality: <span class="idea-quality">${$quality}</span></span>
 	    </div>
 	    <hr class="divider">
 	  </div>`);
