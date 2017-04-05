@@ -18,30 +18,37 @@
     <section class="input-container">
       <form class="idea-form" action="#" method="post">
         <label for="title-input">Title</label>
-        <input type="text" name="title-input" class="title-input" value="" placeholder="Title">
+        <input type="text" name="title-input" class="title-input" value="" placeholder="Title" required="true">
         <label for="body-input">Body</label>
-        <textarea name="body-input" class="body-input" placeholder="Body"></textarea>
-        <input type="submit" name="submit" class="submit" value="save">
+        <textarea name="body-input" class="body-input" placeholder="Body" required="true"></textarea>
+        <input type="submit" name="submit" class="submit-btn" value="save">
       </form>
     </section>
     <section class="idea-listing">
       <form class="search-form" action="#" method="post">
         <label for="search-input">Search</label>
-        <input type="text" name="search-input" class="search-input" value="" placeholder="Search">
+        <input type="text" name="search-input" class="search-input" value="" placeholder="Search" required="true">
       </form>
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="idea-title">Samuel J Speaks</h3><img src="assets/img/delete.svg" alt="delete button" class="delete-button" title="Button to delete the idea from the listing"></div>
-        <p class="card-body">Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it? Do you see a little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when
-          you put quarters in it?</p>
-        <div class="card-footer"><img src="assets/img/upvote.svg" alt="upvote button" class="upvote-button" title="Button to upvote the quality of an idea">
-          <img src="assets/img/downvote.svg" alt="downvote button" class="downvote-button" title="Button to downvote the quality of an idea"></div>
-        <hr class="divider">
+      <div class="card-listing">
+        <!-- <div class="card">
+          <div class="card-header">
+            <h3 class="idea-title">Samuel J Speaks</h3>
+            <button type="button" name="button" class="delete-btn" />
+          </div>
+          <p class="card-body">Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it? Do you see a little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when
+            you put quarters in it?</p>
+          <div class="card-footer">
+            <button type="button" name="button" class="upvote-btn" />
+            <button type="button" name="button" class="downvote-btn" />
+            <span class="idea-quality">quality: swill</span>
+          </div>
+          <hr class="divider">
+        </div> -->
       </div>
-
     </section>
   </main>
+  <script src="http://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="assets/js/scripts.js"></script>
 </body>
 
 </html>
