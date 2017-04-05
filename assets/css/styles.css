@@ -151,6 +151,7 @@ h1 span {
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
   font-size: 14px;
+  padding-left: 10px;
 }
 
 .idea-quality {
@@ -202,8 +203,7 @@ h1 span {
 
 .card-footer {
   display: flex;
-  width: 150px;
-  justify-content: space-between;
+  /*width: 100%;*/
   align-items: center;
 }
 
