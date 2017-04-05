@@ -6,6 +6,7 @@ var $bodyInput = $('.body-input');
 var $submitBtn = $('.submit-btn');
 var $searchInput = $('.search-input');
 var ideaArray = [];
+var qualityArray = ['swill', 'plausible', 'genius']
 
 // Constructors
 
@@ -14,7 +15,6 @@ function Idea(title, body, id) {
 	this.body = body;
 	this.id = id;
 	this.quality = "swill";
-	console.log(this);
 }
 
 $(document).ready(function () {
@@ -28,7 +28,6 @@ function loadIdeas() {
 	}
 }
 
-// Function to check that the input fields all have data before enabling the Add to Album button.
 function readyToSubmit() {
 	if ($titleInput.val() !== '' && $bodyInput.val() !== '') {
 		toggleDisabled($submitBtn, false);
@@ -41,7 +40,6 @@ function toggleDisabled(buttonReference, value) {
 	buttonReference.prop('disabled', value);
 }
 
-// Event listeners on the input container that allow for checking of valid inputs before enabling the Add to Album button.
 $body
 	.on('input', '.title-input', readyToSubmit)
 	.on('input', '.body-input', readyToSubmit)
@@ -51,12 +49,48 @@ $body
 		storeIdea(idea);
 		prependIdea(idea);
 	})
-	.on('click', '.delete-btn', deleteIdea);
+	.on('click', '.delete-btn', deleteIdea)
+	.on('click', '.upvote-btn', adjustQuality)
+	.on('click', '.downvote-btn', adjustQuality);
 
 function deleteIdea() {
 	var $id = $(this).parent().parent().prop('id');
 	$(this).parent().parent().remove();
 	removeFromStorage($id);
+}
+
+function adjustQuality() {
+	var $buttonClicked = $(this).prop('class');
+	var $ideaId = $(this).parent().parent().prop('id');
+	var $qualityElement = $(this).parent().find('.idea-quality');
+	var $currentQuality = $qualityElement.text();
+	switch ($buttonClicked) {
+		case 'upvote-btn':
+			var newQuality = qualityArray[qualityArray.indexOf($currentQuality) + 1] || $currentQuality;
+			break;
+		case 'downvote-btn':
+			var newQuality = qualityArray[qualityArray.indexOf($currentQuality) - 1] || $currentQuality;
+			break;
+		default:
+			console.log('Houston, we have a fucking problem.');
+			break;
+	}
+	updatePageText($qualityElement, newQuality);
+	updateIdea($ideaId, 'quality', newQuality);
+	storeIdeas();
+}
+
+function updatePageText(element, value) {
+	element.text(value);
+}
+
+function updateIdea(id, property, value) {
+	var updatedList = ideaArray.map(function (idea) {
+		if (idea.id == id) {
+			idea[property] = value;
+		}
+		return idea;
+	})
 }
 
 function removeFromStorage(id) {
@@ -75,6 +109,10 @@ function newGuid() {
 
 function storeIdea(idea) {
 	ideaArray.push(idea);
+	storeIdeas();
+}
+
+function storeIdeas() {
 	localStorage.setItem('ideaBoxArray', JSON.stringify(ideaArray));
 }
 
