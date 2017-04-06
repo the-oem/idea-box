@@ -48,14 +48,33 @@ $body
 		var idea = new Idea($titleInput.val(), $bodyInput.val());
 		storeIdea(idea);
 		prependIdea(idea);
+		resetForm();
 	})
 	.on('click', '.delete-btn', deleteIdea)
 	.on('click', '.upvote-btn', adjustQuality)
 	.on('click', '.downvote-btn', adjustQuality)
-	.on('input', '.idea-title', updateInline)
-	.on('input', '.idea-body', updateInline);
+	.on('input keydown', '.idea-title', updateInline)
+	.on('input keydown', '.idea-body', updateInline)
+	.on('input', '.search-input', showSearchResults);
+
+function showSearchResults() {
+	var $searchTerm = $(this).val();
+	if ($searchTerm !== '') {
+		var results = ideaArray.filter(function (idea) {
+			return idea.title.indexOf($searchTerm) > -1 || idea.body.indexOf($searchTerm) > -1 || idea.quality.indexOf($searchTerm) > -1;
+		});
+	} else {
+		var results = ideaArray;
+	}
+	$('.card-listing').children().remove();
+	prependSearchResults(results);
+}
 
 function updateInline() {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		this.blur();
+	}
 	var $updateElement = $(this).prop('class');
 	var $updateValue = $(this).text();
 	switch ($updateElement) {
@@ -68,7 +87,7 @@ function updateInline() {
 			updateIdea($ideaId, 'body', $updateValue);
 			break;
 		default:
-			console.log('Houston, we have a fucking problem while updating title or body.');
+			console.log('Houston, we have a problem while updating title or body.');
 	}
 	storeIdeas();
 }
@@ -92,7 +111,7 @@ function adjustQuality() {
 			var newQuality = qualityArray[qualityArray.indexOf($currentQuality) - 1] || $currentQuality;
 			break;
 		default:
-			console.log('Houston, we have a fucking problem while updating quality.');
+			console.log('Houston, we have a problem while updating quality.');
 			break;
 	}
 	updatePageText($qualityElement, newQuality);
@@ -105,7 +124,6 @@ function updatePageText(element, value) {
 }
 
 function updateIdea(id, property, value) {
-	debugger;
 	var updatedList = ideaArray.map(function (idea) {
 		if (idea.id == id) {
 			idea[property] = value;
@@ -133,26 +151,27 @@ function storeIdeas() {
 	localStorage.setItem('ideaBoxArray', JSON.stringify(ideaArray));
 }
 
+function prependSearchResults(searchResults) {
+	searchResults.forEach(function (idea) {
+		prependIdea(idea);
+	});
+}
+
 function prependIdea(idea) {
-	var $title = idea.title;
-	var $body = idea.body;
-	var $quality = idea.quality;
-	var $id = idea.id;
 	$(".card-listing").prepend(`
-	  <div class="card" id="${$id}">
+	  <div class="card" id="${idea.id}">
 	    <div class="card-header">
-	      <h3 class="idea-title" contenteditable="true">${$title}</h3>
+	      <h3 class="idea-title" contenteditable="true">${idea.title}</h3>
 	      <button type="button" name="button" class="delete-btn" />
 	    </div>
-	    <p class="idea-body" contenteditable="true">${$body}</p>
+	    <p class="idea-body" contenteditable="true">${idea.body}</p>
 	    <div class="card-footer">
 	      <button type="button" name="button" class="upvote-btn" />
 	      <button type="button" name="button" class="downvote-btn" />
-				<span class="quality-label">quality: <span class="idea-quality">${$quality}</span></span>
+				<span class="quality-label">quality: <span class="idea-quality">${idea.quality}</span></span>
 	    </div>
 	    <hr class="divider">
 	  </div>`);
-	resetForm();
 }
 
 function resetForm() {
