@@ -136,9 +136,12 @@ h1 span {
 /* Idea Card Styling */
 
 .idea-title {
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
+  margin-right: 10px;
 }
 
 .idea-body {
@@ -148,10 +151,10 @@ h1 span {
 }
 
 .quality-label {
+  padding-left: 10px;
   color: #6D6E71;
   font-family: 'Roboto Slab', serif;
   font-size: 14px;
-  padding-left: 10px;
 }
 
 .idea-quality {
@@ -203,7 +206,6 @@ h1 span {
 
 .card-footer {
   display: flex;
-  /*width: 100%;*/
   align-items: center;
 }
 
